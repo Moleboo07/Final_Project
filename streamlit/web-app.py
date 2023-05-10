@@ -4,7 +4,6 @@ Here's our first attempt at using data to create a table:
 """
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
 from streamlit_echarts import st_echarts
 import numpy as np
 
