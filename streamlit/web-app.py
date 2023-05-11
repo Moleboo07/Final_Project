@@ -34,7 +34,14 @@ chart_data = pd.DataFrame({'Intitulé du réseau': counts.index, 'Occurrences': 
 st.bar_chart(chart_data.set_index('Intitulé du réseau'))
 
 st.markdown('''
-    <iframe src="https://opendata.plus.transformation.gouv.fr/explore/embed/dataset/export-experiences/analyze/?dataChart=eyJxdWVyaWVzIjpbeyJjb25maWciOnsiZGF0YXNldCI6ImV4cG9ydC1leHBlcmllbmNlcyIsIm9wdGlvbnMiOnt9fSwiY2hhcnRzIjpbeyJhbGlnbk1vbnRoIjp0cnVlLCJ0eXBlIjoibGluZSIsImZ1bmMiOiJDT1VOVCIsInlBeGlzIjoiaWRfZXhwZXJpZW5jZSIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6InJhbmdlLUFjY2VudCJ9XSwieEF4aXMiOiJkYXRlX2FjdGlvbl9lbmdhZ2VlIiwibWF4cG9pbnRzIjoiIiwidGltZXNjYWxlIjoieWVhciIsInNvcnQiOiIiLCJzZXJpZXNCcmVha2Rvd24iOiJldmFsdWF0aW9uX3V0aWxlX3JlcG9uc2Vfc3RydWN0dXJlXzFfcGFyX3Zpc2l0ZXVycyJ9XSwiZGlzcGxheUxlZ2VuZCI6dHJ1ZSwiYWxpZ25Nb250aCI6dHJ1ZX0%3D&static=false&datasetcard=false" 
-    width="800" height="400" frameborder="0"></iframe>
+    <ods-dataset-context context="exportexperiences" exportexperiences-dataset="export-experiences">
+    <ods-chart scientific-display="false" align-month="true">
+        <ods-chart-query context="exportexperiences" field-x="date_action_engagee" maxpoints="0" timescale="year" series-breakdown="id_experience">
+            <ods-chart-serie expression-y="id_experience" chart-type="line" function-y="COUNT" color="range-Accent" scientific-display="true">
+            </ods-chart-serie>
+        </ods-chart-query>
+    </ods-chart>
+
+</ods-dataset-context>
 ''', unsafe_allow_html=True)
 
