@@ -32,16 +32,3 @@ chart_data = pd.DataFrame({'Intitulé du réseau': counts.index, 'Occurrences': 
 
 # Afficher le graphique à barres dans Streamlit
 st.bar_chart(chart_data.set_index('Intitulé du réseau'))
-
-st.markdown('''
-    <ods-dataset-context context="exportexperiences" exportexperiences-dataset="export-experiences">
-    <ods-chart scientific-display="false" align-month="true">
-        <ods-chart-query context="exportexperiences" field-x="date_action_engagee" maxpoints="0" timescale="year" series-breakdown="id_experience">
-            <ods-chart-serie expression-y="id_experience" chart-type="line" function-y="COUNT" color="range-Accent" scientific-display="true">
-            </ods-chart-serie>
-        </ods-chart-query>
-    </ods-chart>
-
-</ods-dataset-context>
-''', unsafe_allow_html=True)
-
