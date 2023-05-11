@@ -32,3 +32,5 @@ chart_data = pd.DataFrame({'Intitulé du réseau': counts.index, 'Occurrences': 
 
 # Afficher le graphique à barres dans Streamlit
 st.bar_chart(chart_data.set_index('Intitulé du réseau'))
+dash = <iframe src="https://opendata.plus.transformation.gouv.fr/explore/embed/dataset/export-experiences/analyze/?dataChart=eyJxdWVyaWVzIjpbeyJjb25maWciOnsiZGF0YXNldCI6ImV4cG9ydC1leHBlcmllbmNlcyIsIm9wdGlvbnMiOnt9fSwiY2hhcnRzIjpbeyJhbGlnbk1vbnRoIjp0cnVlLCJ0eXBlIjoibGluZSIsImZ1bmMiOiJDT1VOVCIsInlBeGlzIjoiaWRfZXhwZXJpZW5jZSIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6InJhbmdlLUFjY2VudCJ9XSwieEF4aXMiOiJkYXRlX2FjdGlvbl9lbmdhZ2VlIiwibWF4cG9pbnRzIjoiIiwidGltZXNjYWxlIjoieWVhciIsInNvcnQiOiIiLCJzZXJpZXNCcmVha2Rvd24iOiJldmFsdWF0aW9uX3V0aWxlX3JlcG9uc2Vfc3RydWN0dXJlXzFfcGFyX3Zpc2l0ZXVycyJ9XSwiZGlzcGxheUxlZ2VuZCI6dHJ1ZSwiYWxpZ25Nb250aCI6dHJ1ZX0%3D&static=false&datasetcard=false" width="400" height="300" frameborder="0"></iframe>
+st.write(dash)
