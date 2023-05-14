@@ -19,7 +19,7 @@ rel_dates = []
 options = Options()
 options.add_argument("--lang=en")
 
-# initialisation du webdriver
+# Initialisation du webdriver
 driver = webdriver.Chrome(options=options)
 
 # Navigation vers une page Web
