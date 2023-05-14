@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 import time
@@ -21,60 +22,78 @@ options.add_argument("--lang=en")
 # initialisation du webdriver
 driver = webdriver.Chrome(options=options)
 
-# navigation vers une page Web
+# Navigation vers une page Web
 url = "https://www.google.com/maps/place/P%C3%B4le+emploi/@44.0911466,6.2435074,17z/data=!4m6!3m5!1s0x12cb854cd9a53289:0x5a8967b2cf01a2f4!8m2!3d44.091215!4d6.243275!16s%2Fg%2F1tpfg31_/"
 driver.get(url)
 
-# cliquer sur le bouton "Trier" et sélectionner l'option "Plus récent"
-# wait = WebDriverWait(driver, 50)
+# Cliquer sur le bouton "Refuser les cookies"
 skip = driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/div[1]/form[1]/div/div/button/span')
 skip.click()
+time.sleep(5)
 
-time.sleep(8)
+# Acceder à l'onglet "Avis"
 avis = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div/div/button[2]/div[2]/div[2]')
 avis.click()
+time.sleep(4)
 
-time.sleep(5)
+# Cliquer sur le bouton "Trier"
 filtre = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div[8]/div[2]/button/span')
 filtre.click()
-
 time.sleep(3)
+
+
+# Sélectionner l'option "Plus récent"
 recent = driver.find_element(By.XPATH, '//*[@id="action-menu"]/div[2]')
 recent.click()
+time.sleep(4)
 
-time.sleep(5)
+
+x = len(driver.find_elements(By.XPATH, '//*[@class="jJc9Ad "]'))
+print("************************************************** \n")
+print(x)
+print("************************************************** \n")
 
 
+# Appuyer de la touche "End" pour pouvoir scroller la page
+while True:
+    driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]').send_keys(Keys.END)
+    time.sleep(3)
+    new_nb = len(driver.find_elements(By.XPATH, '//*[@class="jJc9Ad "]'))
+    if new_nb == x:
+        break
+    x = new_nb
+    print("################################################## \n")
+    print(x)
+    print("\n")
+
+
+
+# Appuyer sur la "plus" pour charger la totalité de messages dans les cas où on ne les a pas 
 try:
     more_btns = driver.find_elements(By.XPATH, '//*[@class="w8nwRe kyuRq"]')
         
 except NoSuchElementException:
     more_btns = None
 
-
 if more_btns:
     for m in more_btns:
         m.click()
         print("button clicked")  
-        # print(m)        
-        time.sleep(4)
+        time.sleep(3)
+        
+        
+        
 
-
-# parcourir les avis et extraire les différentes informations
+# Parcourir les avis et extraire les différentes informations
         
 while True:
     response = BeautifulSoup(driver.page_source, 'html.parser')
     rlist = response.find_all('div', class_='GHT2ce')
-    # print("\n la liste rlist : ",len(rlist))
-    # print("\n ************************************************************ \n")
-    
+
     new_list = []
     
     for i in range(1,len(rlist),2):
         new_list.append(rlist[i])
-        
-    # print("\n la liste new : ",len(new_list))
-    # print("\n ************************************************************ \n")
     
     for r in new_list:
          
@@ -96,16 +115,17 @@ while True:
                     
         
         try:
-            rating_span = r.find('div', class_='DU9Pgb').find('span', class_='kvMYJc')
-            rating = rating_span['aria-label']
+    
+            star = r.find_all('img', {'class': 'hCCjke vzX5Ic'})
+            rating = len(star)
             ratings.append(rating)
             print(rating)
             print("\n")
         except Exception:
             aucun = "Aucun"
             ratings.append(aucun)
-            # ratings.append(None)
-            rating = None
+            rating = None            
+            
                     
         try:
             rel_date = r.find('div', class_='DU9Pgb').find('span', class_='rsqaWe').text
@@ -115,12 +135,11 @@ while True:
         except Exception:
             aucun = "Aucun"
             rel_dates.append(aucun)
-            # rel_dates.append(None)
             rel_date = None
 
         print ("****************************************************** \n")
 
-    # fermeture du navigateur
+    # Fermeture du navigateur
     driver.quit()
 
     # Création du dataframe
