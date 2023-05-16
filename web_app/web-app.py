@@ -17,7 +17,7 @@ st.title("Services publics")
 selected_tab = st.sidebar.selectbox("Sélectionner un onglet", ("global", "pole emploi"))
 
 # Charger les données depuis le fichier CSV
-df = pd.read_csv("export-experiences.csv", sep=";")
+df = pd.read_csv("web_app/export-experiences.csv", sep=";")
 df[['Date', 'Heure']] = df['Date de publication'].str.split('T',n=1, expand=True)
 df['Date'] = pd.to_datetime(df['Date'])
 df['Mois'] = df['Date'].dt.to_period('M')
