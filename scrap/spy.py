@@ -7,8 +7,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 import time
+from selenium.webdriver import ActionChains
 
 import pandas as pd
+import csv
 
 
 
@@ -26,49 +28,96 @@ driver.get(url)
 # Cliquer sur le bouton "Refuser les cookies"
 skip = driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/div[1]/form[1]/div/div/button/span')
 skip.click()
-time.sleep(5)
+time.sleep(3)
 
 
 
-data = pd.read_csv("pole_emploi_struc_test.csv", sep=";", encoding="ISO-8859-1")
+data = pd.read_csv("pole_emploi_struc.csv", sep=";", encoding="ISO-8859-1")
 
 data.info()
 entities = data['Libelle'].tolist()
+
+enity_name = []
+review_texts = []
+ratings = []
+rel_dates = []
 
 # print(entity)
 while True:
     for entity in entities:
         print(entity)
-
-
-        review_texts = []
-        ratings = []
-        rel_dates = []
-
+        
 
         # Saisie de l'antenne de pôle emploi 
-        saisie = driver.find_element(By.XPATH, '//*[@id="searchboxinput"]')
+        # saisie = driver.find_element(By.XPATH, '//*[@id="searchboxinput"]')
+        # saisie.clear()
+        # time.sleep(2)
+        # saisie.send_keys(entity, Keys.ENTER)
+        # # saisie
+        # time.sleep(4)
+        
+        saisie = WebDriverWait(driver, 4).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="searchboxinput"]')))
         saisie.clear()
         saisie.send_keys(entity, Keys.ENTER)
         # saisie
-        time.sleep(3)
+        time.sleep(4)
 
 
         # Acceder à l'onglet "Avis"
-        avis = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div/div/button[2]/div[2]/div[2]')
-        avis.click()
-        time.sleep(4)
+        # avis = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div/div/button[2]/div[2]/div[2]')
+        # avis.click()
+        # time.sleep(4)
+        
+        
+        
+        try:
+            avis = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div/div/button[2]/div[2]/div[2]')
+                
+        except NoSuchElementException:
+            avis = None
+            
 
+        if avis:
+            avis.click()
+            time.sleep(4)
+        
+        else:    # break
+            continue
+        
+        
+        try:
+            filtre = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div[8]/div[2]/button/span')
+    
+        except NoSuchElementException:
+            filtre = None
+
+        if filtre:
+            filtre.click()
+            time.sleep(3)
+
+    
+    
         # Cliquer sur le bouton "Trier"
-        filtre = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div[8]/div[2]/button/span')
-        filtre.click()
-        time.sleep(3)
+        # filtre = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div[8]/div[2]/button/span')
+        # filtre.click()
+        # time.sleep(3)
 
 
         # Sélectionner l'option "Plus récent"
-        recent = driver.find_element(By.XPATH, '//*[@id="action-menu"]/div[2]')
-        recent.click()
-        time.sleep(4)
+        # recent = driver.find_element(By.XPATH, '//*[@id="action-menu"]/div[2]')
+        # recent.click()
+        # time.sleep(4)
+        
+        
+        try:
+            recent = driver.find_element(By.XPATH, '//*[@id="action-menu"]/div[2]')
+
+        except NoSuchElementException:
+            recent = None
+
+        if recent:
+            recent.click()
+            time.sleep(4)
 
 
         x = len(driver.find_elements(By.XPATH, '//*[@class="jJc9Ad "]'))
@@ -78,17 +127,20 @@ while True:
 
 
         # Appuyer de la touche "End" pour pouvoir scroller la page
-        while True:
-            driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]').send_keys(Keys.END)
-            time.sleep(3)
-            new_nb = len(driver.find_elements(By.XPATH, '//*[@class="jJc9Ad "]'))
-            if new_nb == x:
-                break
-            x = new_nb
-            print("################################################## \n")
-            print(x)
-            print("\n")
+        try:
+            while True:
+                driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]').send_keys(Keys.END)
+                time.sleep(4)
+                new_nb = len(driver.find_elements(By.XPATH, '//*[@class="jJc9Ad "]'))
+                if new_nb == x:
+                    break
+                x = new_nb
+                print("################################################## \n")
+                print(x)
+                print("\n")
 
+        except : 
+            pass
 
 
         # Appuyer sur le bouton "plus" pour charger la totalité de messages dans les cas où on ne les a pas 
@@ -99,80 +151,94 @@ while True:
             more_btns = None
 
         if more_btns:
-            for m in more_btns:
-                m.click()
-                print("button clicked")  
+            if len(more_btns) == 1:
+                actions = ActionChains(driver)
+                actions.move_to_element(more_btns[0]).click().perform()
+                print("button clicked")
                 time.sleep(3)
-                
-                
-                
+            else:
+                for m in more_btns:
+                    actions = ActionChains(driver)
+                    actions.move_to_element(m).click().perform()
+                    print("button clicked")
+                    time.sleep(3)
+
+                      
 
         # Parcourir les avis et extraire les différentes informations
-                
-        while True:
-            response = BeautifulSoup(driver.page_source, 'html.parser')
-            rlist = response.find_all('div', class_='GHT2ce')
+        try :         
+            while True:
+                response = BeautifulSoup(driver.page_source, 'html.parser')
+                rlist = response.find_all('div', class_='GHT2ce')
 
-            new_list = []
-            
-            for i in range(1,len(rlist),2):
-                new_list.append(rlist[i])
-            
-            for r in new_list:
+                new_list = []
                 
-                try:
-                    review_div = r.find('div', class_='MyEned')
-                    review_text = None
-                    if review_div:
-                        review_text = review_div.find('span', class_='wiI7pd').text
-                        review_texts.append(review_text)
-                        print(review_text)
-                        print("\n")
-                    else:
-                        aucun = "Aucun"
-                        review_texts.append(aucun)
-                        print("Pas de commentaire")
-                except Exception as e:
-                    print(e)
-                    review_text = None
-                            
+                for i in range(1,len(rlist),2):
+                    new_list.append(rlist[i])
                 
-                try:
-            
-                    star = r.find_all('img', {'class': 'hCCjke vzX5Ic'})
-                    rating = len(star)
-                    ratings.append(rating)
-                    print(rating)
-                    print("\n")
-                except Exception:
-                    aucun = "Aucun"
-                    ratings.append(aucun)
-                    rating = None            
+                for r in new_list:
                     
-                            
-                try:
-                    rel_date = r.find('div', class_='DU9Pgb').find('span', class_='rsqaWe').text
-                    rel_dates.append(rel_date)
-                    print(rel_date)
-                    print("\n")
-                except Exception:
-                    aucun = "Aucun"
-                    rel_dates.append(aucun)
-                    rel_date = None
+                    
+                    enity_name.append(entity)
+                     
+                    
+                    try:
+                        review_div = r.find('div', class_='MyEned')
+                        review_text = None
+                        if review_div:
+                            review_text = review_div.find('span', class_='wiI7pd').text
+                            review_texts.append(review_text)
+                            print(review_text)
+                            print("\n")
+                        else:
+                            aucun = "Aucun"
+                            review_texts.append(aucun)
+                            print("Pas de commentaire")
+                    except Exception as e:
+                        print(e)
+                        review_text = None
+                                
+                    
+                    try:
+                
+                        star = r.find_all('img', {'class': 'hCCjke vzX5Ic'})
+                        rating = len(star)
+                        ratings.append(rating)
+                        print(rating)
+                        print("\n")
+                    except Exception:
+                        aucun = "Aucun"
+                        ratings.append(aucun)
+                        rating = None            
+                        
+                                
+                    try:
+                        rel_date = r.find('div', class_='DU9Pgb').find('span', class_='rsqaWe').text
+                        rel_dates.append(rel_date)
+                        print(rel_date)
+                        print("\n")
+                    except Exception:
+                        aucun = "Aucun"
+                        rel_dates.append(aucun)
+                        rel_date = None
 
-                print ("****************************************************** \n")
+                    print ("****************************************************** \n")
 
-            break
-    # Création du dataframe
-    df = pd.DataFrame({
-        'review_text': review_texts,
-        'rating': ratings,
-        'rel_date': rel_dates
-    })
+                break
+            
+        except NoSuchElementException:
+            print("pas d'antenne précise !!!! \n")
+        
+        # Création du dataframe
+        df = pd.DataFrame({
+            'entite': enity_name,
+            'review_text': review_texts,
+            'rating': ratings,
+            'rel_date': rel_dates
+        })
 
-    # df.to_csv("scrap_1.csv", index=False)
-
-    print(df)  
+        df.to_csv('scrap_final.csv', quoting=csv.QUOTE_ALL, sep=';',index=False)
+        print(df)  
             
         # Fermeture du navigateur
     driver.quit()
