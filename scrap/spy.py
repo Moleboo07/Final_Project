@@ -49,12 +49,6 @@ while True:
         
 
         # Saisie de l'antenne de pôle emploi 
-        # saisie = driver.find_element(By.XPATH, '//*[@id="searchboxinput"]')
-        # saisie.clear()
-        # time.sleep(2)
-        # saisie.send_keys(entity, Keys.ENTER)
-        # # saisie
-        # time.sleep(4)
         
         saisie = WebDriverWait(driver, 4).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="searchboxinput"]')))
         saisie.clear()
@@ -64,11 +58,6 @@ while True:
 
 
         # Acceder à l'onglet "Avis"
-        # avis = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div/div/button[2]/div[2]/div[2]')
-        # avis.click()
-        # time.sleep(4)
-        
-        
         
         try:
             avis = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div/div/button[2]/div[2]/div[2]')
@@ -84,6 +73,7 @@ while True:
         else:    # break
             continue
         
+        # Cliquer sur le bouton "Trier"
         
         try:
             filtre = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div[8]/div[2]/button/span')
@@ -95,19 +85,8 @@ while True:
             filtre.click()
             time.sleep(3)
 
-    
-    
-        # Cliquer sur le bouton "Trier"
-        # filtre = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[3]/div[8]/div[2]/button/span')
-        # filtre.click()
-        # time.sleep(3)
-
 
         # Sélectionner l'option "Plus récent"
-        # recent = driver.find_element(By.XPATH, '//*[@id="action-menu"]/div[2]')
-        # recent.click()
-        # time.sleep(4)
-        
         
         try:
             recent = driver.find_element(By.XPATH, '//*[@id="action-menu"]/div[2]')
