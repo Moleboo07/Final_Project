@@ -6,7 +6,8 @@ Here's our first attempt at using data to create a table:
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-
+import folium
+from geopy.geocoders import Nominatim
 
 
 st.set_page_config(page_title="Service-publics", page_icon=":books:", layout="wide")
@@ -22,7 +23,7 @@ df[['Date', 'Heure']] = df['Date de publication'].str.split('T',n=1, expand=True
 df['Date'] = pd.to_datetime(df['Date'])
 df['Mois'] = df['Date'].dt.to_period('M')
 if selected_tab == "global":
-    st.header('Ce qui ce dit sur la plateforme SP+')
+    st.header('Ce qui se dit sur la plateforme SP+')
 
     services = df['Intitulé Typologie 1'].unique()
     service = st.multiselect('Service', services, key="service_multiselect")
@@ -49,18 +50,18 @@ if selected_tab == "global":
 
         # set the filtered_data variable to the final query result
     filtered_data = query
-     # Dates de début et de fin
-    start_date = df['Date'].min().date()
-    end_date = df['Date'].max().date()
+    #  # Dates de début et de fin
+    # start_date = df['Date'].min().date()
+    # end_date = df['Date'].max().date()
 
-    # Sélection de la plage de dates avec un select_slider
-    selected_dates = st.slider("Sélectionnez une plage de dates", start_date, end_date, (start_date, end_date))
+    # # Sélection de la plage de dates avec un select_slider
+    # selected_dates = st.slider("Sélectionnez une plage de dates", start_date, end_date, (start_date, end_date))
 
-    # Filtrer le DataFrame en fonction des dates sélectionnées
-    start_selected_date, end_selected_date = selected_dates
-    start_selected_date = pd.to_datetime(selected_dates[0])
-    end_selected_date = pd.to_datetime(selected_dates[1])
-    filtered_data = df.loc[df['Date'].between(start_selected_date, end_selected_date)]
+    # # Filtrer le DataFrame en fonction des dates sélectionnées
+    # start_selected_date, end_selected_date = selected_dates
+    # start_selected_date = pd.to_datetime(selected_dates[0])
+    # end_selected_date = pd.to_datetime(selected_dates[1])
+    # filtered_data = df.loc[df['Date'].between(start_selected_date, end_selected_date)]
     # Afficher le DataFrame filtré
     st.write(filtered_data)
     st.subheader("Nombre total d'avis en 2019, 2020, 2021 et 2022")
@@ -195,6 +196,26 @@ if selected_tab == "global":
     st.subheader("Nombre d'avis selon le ressenti des usagers")
 
     st.bar_chart(count_by_region_value)
+   
+
+    geolocator = Nominatim(user_agent="my_app")
+
+    # Créer une carte Folium centrée sur la France
+    map_france = folium.Map(location=[46.603354, 1.888334], zoom_start=6, tiles = "Stamen Toner")
+
+    departements = filtered_data['Intitulé département usager'].unique()
+
+    for departement in departements:
+        departement_str = str(departement)  # Convertir en chaîne de caractères
+        location = geolocator.geocode(departement_str + ", France")
+        if location:
+            latitude = location.latitude
+            longitude = location.longitude
+            # Ajouter un marqueur sur la carte pour chaque département
+            folium.Marker([latitude, longitude], popup=departement_str).add_to(map_france)
+
+    # Afficher la carte
+    map_france
 
 
 
@@ -256,4 +277,5 @@ elif selected_tab == "pole emploi":
 
     count_by_region_value = df2.groupby(['Intitulé région usager', 'Ressenti usager']).size().unstack().fillna(0)
     st.bar_chart(count_by_region_value)
+
 
