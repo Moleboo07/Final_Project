@@ -177,7 +177,6 @@ if option_1 == 'Analyse SP+':
         #count_by_topic = df_sp_mail['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
-        st.write( "-1 : autres , 0 : Communication avec l'employeur et les documents de paie , 1: Formats de documents et informations financières , 2 : Documents liés au chômage et services administratifs"  )
     elif option_2 == 'Téléphone' :
         st.write(df_sp_tel)
         df_filtered = df_sp_tel[df_sp_tel['clusters'] != -1]
@@ -185,7 +184,6 @@ if option_1 == 'Analyse SP+':
         #count_by_topic = df_sp_tel['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
-        st.write( "-1 : autres , 0 : Communication avec l'employeur et les documents de paie , 1: Formats de documents et informations financières , 2 : Documents liés au chômage et services administratifs"  )
 
     elif option_2 == 'Démarche en ligne' :
         st.write(df_sp_info)
