@@ -24,25 +24,25 @@ df = pd.read_csv("export-experiences.csv", sep=";")
 df2 = pd.read_csv("year_cleaning_1.csv", sep=";")
 
 #import csv SP
-df_sp_glo = pd.read_csv("final/topic_glo_sp.csv", sep=";")
-df_sp_tel = pd.read_csv("final/topic_tel_sp.csv", sep=";")
-df_sp_mail = pd.read_csv("final/topic_mail_sp.csv", sep=";")
-df_sp_info = pd.read_csv("final/topic_info_sp.csv", sep=";")
-df_sp_accueil = pd.read_csv("final/topic_accueil_sp.csv", sep=";")
+df_sp_glo = pd.read_csv("topic_glo_sp.csv", sep=";")
+df_sp_tel = pd.read_csv("topic_tel_sp.csv", sep=";")
+df_sp_mail = pd.read_csv("topic_mail_sp.csv", sep=";")
+df_sp_info = pd.read_csv("topic_info_sp.csv", sep=";")
+df_sp_accueil = pd.read_csv("topic_accueil_sp.csv", sep=";")
 
 #import csv PN
-df_pn_glo = pd.read_csv("final/topic_glo_scrap.csv", sep=";")
-df_pn_tel = pd.read_csv("final/topic_tel_scrap.csv", sep=";")
-df_pn_mail = pd.read_csv("final/topic_mail_scrap.csv", sep=";")
-df_pn_info = pd.read_csv("final/topic_info_scrap.csv", sep=";")
-df_pn_accueil = pd.read_csv("final/topic_accueil_scrap.csv", sep=";")
+df_pn_glo = pd.read_csv("topic_glo_scrap.csv", sep=";")
+df_pn_tel = pd.read_csv("topic_tel_scrap.csv", sep=";")
+df_pn_mail = pd.read_csv("topic_mail_scrap.csv", sep=";")
+df_pn_info = pd.read_csv("topic_info_scrap.csv", sep=";")
+df_pn_accueil = pd.read_csv("topic_accueil_scrap.csv", sep=";")
 
 #import csv global
-df_glo = pd.read_csv("final/topic_glo.csv", sep=";")
-df_glo_tel = pd.read_csv("final/topic_tel(1).csv", sep=";")
-df_glo_mail = pd.read_csv("final/topic_mail.csv", sep=";")
-df_glo_info = pd.read_csv("final/topic_info.csv", sep=";")
-df_glo_accueil = pd.read_csv("final/topic_info.csv", sep=";")
+df_glo = pd.read_csv("topic_glo.csv", sep=";")
+df_glo_tel = pd.read_csv("topic_tel(1).csv", sep=";")
+df_glo_mail = pd.read_csv("topic_mail.csv", sep=";")
+df_glo_info = pd.read_csv("topic_info.csv", sep=";")
+df_glo_accueil = pd.read_csv("topic_info.csv", sep=";")
 
 option_1 = st.selectbox(
 'Sélectionnez :',
