@@ -9,7 +9,7 @@ import plotly.express as px
 # import folium
 # from geopy.geocoders import Nominatim
 # from streamlit_folium import folium_static
-# from PIL import Image
+from PIL import Image
 
 
 
