@@ -14,7 +14,7 @@ from PIL import Image
 
 
 st.set_page_config(page_title="Service-publics", page_icon=":books:", layout="wide")
-logo = Image.open('logo.png')
+logo = Image.open('final/logo.png')
 
 st.image(logo, width=100)
 st.title("Services publics")
