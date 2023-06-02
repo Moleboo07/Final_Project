@@ -6,10 +6,10 @@ Here's our first attempt at using data to create a table:
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import folium
-from geopy.geocoders import Nominatim
-from streamlit_folium import folium_static
-from PIL import Image
+# import folium
+# from geopy.geocoders import Nominatim
+# from streamlit_folium import folium_static
+# from PIL import Image
 
 
 
@@ -52,12 +52,12 @@ st.write('Vous avez sélectionné :', option_1)
 
 if option_1 == 'Analyse SP+':
 
-    geolocator = Nominatim(user_agent="my_app")
+    # geolocator = Nominatim(user_agent="my_app")
 
-        # Créer une carte Folium centrée sur la France
-    map_france = folium.Map(location=[46.603354, 1.888334], zoom_start=6, tiles="Stamen Toner")
+    #     # Créer une carte Folium centrée sur la France
+    # map_france = folium.Map(location=[46.603354, 1.888334], zoom_start=6, tiles="Stamen Toner")
 
-    departements = df['Intitulé département usager'].unique()
+    # departements = df['Intitulé département usager'].unique()
 
     # for departement in departements:
     #     departement_str = str(departement)  # Convertir en chaîne de caractères
