@@ -21,7 +21,7 @@ st.title("Services publics")
 
 # Charger les données depuis le fichier CSV
 df = pd.read_csv("export-experiences.csv", sep=";")
-df2 = pd.read_csv("year_cleaning_1.csv", sep=";")
+df2 = pd.read_csv("/web_app/year_cleaning_1.csv", sep=";")
 
 #import csv SP
 df_sp_glo = pd.read_csv("final/topic_glo_sp.csv", sep=";")
