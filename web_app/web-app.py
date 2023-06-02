@@ -172,32 +172,42 @@ if option_1 == 'Analyse SP+':
 
     if option_2 == 'Email' :
         st.write(df_sp_mail)
-        count_by_topic = df_sp_mail['clusters'].value_counts().sort_index()
+        df_filtered = df_sp_mail[df_sp_mail['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_sp_mail['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
         st.write( "-1 : autres , 0 : Communication avec l'employeur et les documents de paie , 1: Formats de documents et informations financières , 2 : Documents liés au chômage et services administratifs"  )
     elif option_2 == 'Téléphone' :
         st.write(df_sp_tel)
-        count_by_topic = df_sp_tel['clusters'].value_counts().sort_index()
+        df_filtered = df_sp_tel[df_sp_tel['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_sp_tel['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
         st.write( "-1 : autres , 0 : Communication avec l'employeur et les documents de paie , 1: Formats de documents et informations financières , 2 : Documents liés au chômage et services administratifs"  )
 
     elif option_2 == 'Démarche en ligne' :
         st.write(df_sp_info)
-        count_by_topic = df_sp_info['clusters'].value_counts().sort_index()
+        df_filtered = df_sp_info[df_sp_info['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_sp_info['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
     elif option_2 == 'Accueil' :
         st.write(df_sp_accueil)
-        count_by_topic = df_sp_accueil['clusters'].value_counts().sort_index()
+        df_filtered = df_sp_accueil[df_sp_accueil['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_sp_accueil['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
     elif option_2 == 'Global' :
         st.write(df_sp_glo)
-        count_by_topic = df_sp_glo['clusters'].value_counts().sort_index()
+        df_filtered = df_sp_glo[df_sp_glo['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_sp_glo['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
@@ -258,31 +268,41 @@ elif option_1 == "Analyse PN+" :
 
     if option_3 == 'Email' :
         st.write(df_pn_mail)
-        count_by_topic = df_pn_mail['clusters'].value_counts().sort_index()
+        df_filtered = df_pn_mail[df_pn_mail['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_pn_mail['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
  
     elif option_3 == 'Téléphone' :
         st.write(df_pn_tel)
-        count_by_topic = df_pn_tel['clusters'].value_counts().sort_index()
+        df_filtered = df_pn_tel[df_pn_tel['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_pn_tel['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
     elif option_3 == 'Démarche en ligne' :
         st.write(df_pn_info)
-        count_by_topic = df_pn_info['clusters'].value_counts().sort_index()
+        df_filtered = df_pn_info[df_pn_info['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_pn_info['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
     elif option_3 == 'Accueil' :
         st.write(df_pn_accueil)
-        count_by_topic = df_pn_accueil['clusters'].value_counts().sort_index()
+        df_filtered = df_pn_accueil[df_pn_accueil['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_pn_accueil['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
     elif option_3 == 'Global' :
         st.write(df_pn_glo)
-        count_by_topic = df_pn_glo['clusters'].value_counts().sort_index()
+        df_filtered = df_pn_glo[df_pn_glo['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_pn_glo['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
@@ -297,34 +317,46 @@ elif option_1 == 'Analyse globale' :
     st.write('Vous avez sélectionné :', option_4)
 
     if option_4 == 'Email' :
-        st.write(df_pn_mail)
-        count_by_topic = df_glo_mail['clusters'].value_counts().sort_index()
+        st.write(df_glo_mail)
+        df_filtered = df_glo_mail[df_glo_mail['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_glo_mail['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
     elif option_4 == 'Téléphone' :
         st.write(df_glo_tel)
-        count_by_topic = df_glo_tel['clusters'].value_counts().sort_index()
+        df_filtered = df_glo_tel[df_glo_tel['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_glo_tel['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
     elif option_4 == 'Démarche en ligne' :
         st.write(df_glo_info)
-        count_by_topic = df_glo_info['clusters'].value_counts().sort_index()
+        df_filtered = df_glo_info[df_glo_info['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_glo_info['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
 
     elif option_4 == 'Accueil' :
         st.write(df_glo_accueil)
-        count_by_topic = df_glo_accueil['clusters'].value_counts().sort_index()
+        df_filtered = df_glo_accueil[df_glo_accueil['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_glo_accueil['clusters'].value_counts().sort_index()
+        #count_by_topic_filtered = count_by_topic[count_by_topic != -1]
+
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
 
     elif option_4 == 'Global' :
         st.write(df_glo)
-        count_by_topic = df_glo['clusters'].value_counts().sort_index()
+        df_filtered = df_glo[df_glo['clusters'] != -1]
+        count_by_topic = df_filtered['clusters'].value_counts().sort_index()
+        #count_by_topic = df_glo['clusters'].value_counts().sort_index()
         st.subheader("Nombre de commentaires par topic")
         st.bar_chart(count_by_topic)
 
