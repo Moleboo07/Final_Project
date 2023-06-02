@@ -9,14 +9,14 @@ import plotly.express as px
 # import folium
 # from geopy.geocoders import Nominatim
 # from streamlit_folium import folium_static
-from PIL import Image
+# from PIL import Image
 
 
 
 st.set_page_config(page_title="Service-publics", page_icon=":books:", layout="wide")
-logo = Image.open('final/logo.png')
+# logo = Image.open('final/logo.png')
 
-st.image(logo, width=100)
+# st.image(logo, width=100)
 st.title("Services publics")
 
 # Charger les données depuis le fichier CSV
